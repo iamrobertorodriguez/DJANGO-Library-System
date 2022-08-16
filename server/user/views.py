@@ -23,6 +23,16 @@ class UserViewSet(viewsets.ModelViewSet):
             self.permission_classes = [IsAdminUser]
             return [permission() for permission in self.permission_classes]
 
+    def create(self, request, *args, **kwargs):
+        request.data._mutable = True
+        request.data['is_staff'] = False
+        request.data['is_superuser'] = False
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=201, headers=headers)
+
     def retrieve(self, request, pk):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
