@@ -2,3 +2,4 @@ env
 /REACT-Library-System/
 venv
 __pycache__
+migrations
