@@ -15,11 +15,11 @@ RUN poetry config virtualenvs.create false
 # RUN poetry config virtualenvs.in-project true
 
 # Copiar los archivos necesarios al contenedor
-COPY pyproject.toml poetry.lock /app/
+COPY requirements.txt /app/
 
 # Instalar las dependencias utilizando Poetry
 COPY ./library /app/library
-RUN poetry install
+RUN pip install -r requirements.txt
 # RUN ~/.poetry/bin/poetry install --no-dev
 
 # Copiar todo el código fuente de la aplicación al contenedor
